@@ -1,3 +1,5 @@
+require 'pry'
+
 module MealFinder 
   class CLI
 
