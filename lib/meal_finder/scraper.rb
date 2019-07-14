@@ -26,7 +26,7 @@ module MealFinder
     def self.scrape_recipes(selected_course) 
 
     doc = Nokogiri::HTML(open(selected_course.url))
-    #binding.pry
+    
       doc.css("#search-results h3").each do |recipes| 
         
         new_recipe = Recipes.new
