@@ -1,8 +1,6 @@
 # MealFinder
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/meal_finder`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Meal Finder is a command line interface that enables the user to browse and find recipe inspirations from the BBC Good Food website. The user will be presented with a list of available courses, and then the recipes for their chosen course. The user can then choose a recipe to find out more about the ingredients needed and the step by step methods for making their chosen dish.
 
 ## Installation
 
@@ -22,7 +20,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+From the local directory, execute
+
+    $ mealfinder 
+
+and follow the prompts.
 
 ## Development
 
