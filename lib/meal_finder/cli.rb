@@ -64,12 +64,14 @@ module MealFinder
       if input.downcase == "exit"
         goodbye
 
-      elsif input.to_i > 0 && input.to_i < 23
+      elsif input.to_i > 0 && input.to_i <= course_arr.size
           selected_course = course_arr[input.to_i-1]
 
           puts "\t Great! Here are some ideas for you to make for #{selected_course.name}. Please type in the number of the dish you would like to 
           \t find out more about or simply type in 'list courses' to go back to the main menu and choose a different course\t" 
-        
+      
+          MealFinder::Scraper.scrape_recipes(selected_course)
+          list_recipes(selected_course)  
 
       else 
         puts "\t Sorry, I did not recognise that..."
@@ -78,8 +80,7 @@ module MealFinder
 
       end 
         
-    MealFinder::Recipes.list_recipe_names(selected_course)
-    list_recipes(selected_course)
+    
              
     end 
 
@@ -106,7 +107,7 @@ module MealFinder
       elsif input.downcase == "exit"
         goodbye
       
-      elsif input.to_i > 0 && input.to_i < 16
+      elsif input.to_i > 0 && input.to_i <= recipe_arr.size
           selected_recipe = recipe_arr[input.to_i-1]
  
       recipe_details(selected_recipe)
@@ -122,7 +123,9 @@ module MealFinder
   
     def recipe_details(selected_recipe)
       
-      MealFinder::Recipes.recipe_details(selected_recipe)
+      MealFinder::Scraper.scrape_recipe_details(selected_recipe)
+
+
 
       puts "\t Not quite what you are looking for? 
       \t Type 'list recipes' to go back to list of recipes from the same Course and choose a different dish\n\t

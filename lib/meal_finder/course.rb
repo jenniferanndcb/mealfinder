@@ -9,8 +9,9 @@ module MealFinder
   
     @@all = []
     
-      def initialize
-        super 
+      def initialize (name = nil, url = nil)
+        @name = name 
+        @url = url  
       end 
      
       def self.list_course_names
@@ -19,6 +20,10 @@ module MealFinder
   
       def self.all 
        @@all
+      end 
+
+      def save 
+        @@all << self 
       end 
   
     end 

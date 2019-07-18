@@ -8,6 +8,7 @@ module MealFinder
     BASE_URL = "https://www.bbcgoodfood.com" 
 
     def self.scrape_courses
+    puts "************ scraping ***************"
       html = open('https://www.bbcgoodfood.com/search/recipes?query=course')
       doc = Nokogiri::HTML(html)
       
@@ -18,13 +19,14 @@ module MealFinder
          
         new_course.url = BASE_URL + course.css("a")[0]["href"]
         
+        Course.all << new_course
       end  
 
     end 
     
 
     def self.scrape_recipes(selected_course) 
-
+    puts "************ scraping ***************"
     doc = Nokogiri::HTML(open(selected_course.url))
     
       doc.css("#search-results h3").each do |recipes| 
@@ -33,12 +35,14 @@ module MealFinder
         new_recipe.name = recipes.css("a").text.strip
         new_recipe.url = BASE_URL + recipes.css("a")[0]["href"]
       
+        Recipes.all << new_recipe
       end 
 
     end 
 
 
     def self.scrape_recipe_details(selected_recipe)
+      puts "************ scraping ***************"
       ingredients_list = []
       method_list = []
 

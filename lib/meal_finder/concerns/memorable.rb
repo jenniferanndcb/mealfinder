@@ -2,9 +2,7 @@ module Memorable
 
   module InstanceMethods 
 
-    def initialize(name = nil, url = nil)
-      @name = name
-      @url = url
+    def save
       self.class.all << self 
     end 
 
