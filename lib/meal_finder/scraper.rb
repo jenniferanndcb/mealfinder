@@ -34,7 +34,8 @@ module MealFinder
         new_recipe = Recipes.new
         new_recipe.name = recipes.css("a").text.strip
         new_recipe.url = BASE_URL + recipes.css("a")[0]["href"]
-      
+        
+
         Recipes.all << new_recipe
       end 
 
@@ -48,11 +49,10 @@ module MealFinder
 
       doc = Nokogiri::HTML(open(selected_recipe.url))
 
-      puts "\t"
-      puts "Here is the recipe for #{selected_recipe.name}\n\t"
-      puts "#{doc.css(".recipe-header__description p").text}\n\t"
-      puts "#{doc.css(".recipe-details .recipe-details__text .recipe-details__cooking-time-prep").text}"
-      puts "#{doc.css(".recipe-details .recipe-details__text .recipe-details__cooking-time-cook").text}\n\t"
+      
+      selected_recipe.description = doc.css(".recipe-header__description p").text
+      selected_recipe.prep_time = doc.css(".recipe-details .recipe-details__text .recipe-details__cooking-time-prep").text
+      selected_recipe.cook_time = doc.css(".recipe-details .recipe-details__text .recipe-details__cooking-time-cook").text
       
 
       doc.css(".recipe-content").each do |recipe|
@@ -74,7 +74,16 @@ module MealFinder
         puts "\nMethod:\n\t"
         puts method_list.map.with_index {|method, index| "#{index+1}. #{method}\n\t"}
       
+     
+      selected_recipe.details  = self 
+      
       end   
+      
+      
+      
+      
+
+      
 
     end 
 
