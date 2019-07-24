@@ -111,7 +111,6 @@ module MealFinder
         
       recipe_details(selected_recipe)
 
-      #MealFinder::Recipes.find_or_create_recipe(selected_recipe)
       
       else 
         puts "\t Sorry, I did not recognise that.
@@ -120,34 +119,44 @@ module MealFinder
       select_recipe(recipe_arr)
       end 
     end 
-  
-  
+    
     def recipe_details(selected_recipe)
-      
-      puts "\t"
-      puts "Here is the recipe for #{selected_recipe.name}\n\t"
-      
       MealFinder::Scraper.scrape_recipe_details(selected_recipe)
-
-      puts "#{selected_recipe.description}"
+      
+      selected_recipe.details = recipe_details_content(selected_recipe) 
+      binding.pry
+      #selected_recipe.details
+      recipe_next_steps
+       
+      
+    end 
+    
+    def recipe_details_content(selected_recipe)
+      puts "\t"
+      puts "Here is the recipe for #{selected_recipe.name}\n\t" 
+      
+      puts "#{selected_recipe.description}\n\t"
       puts "#{selected_recipe.prep_time}"
-      puts "#{selected_recipe.cook_time}"
+      puts "#{selected_recipe.cook_time}\n\t"
+    
+      puts "Ingredients:\n\t"
+      puts selected_recipe.ingredients_list.collect {|item| "#{item}"}
+      puts "\nMethod:\n\t"
+      puts selected_recipe.method_list.map.with_index {|method, index| "#{index+1}. #{method}\n\t"}
+
+    end
 
       
 
-      
+     
+
+    def recipe_next_steps
 
       puts "\t Not quite what you are looking for? 
       \t Type 'list recipes' to go back to list of recipes from the same Course and choose a different dish\n\t
       \t To go back to the main menu, simply type 'list courses'
       \t To exit the program, type 'exit'"
-      
-      recipe_next_steps
 
-    end 
-
-    def recipe_next_steps
-      
       input = gets.chomp 
 
       if input.downcase == "list recipes"
@@ -159,7 +168,6 @@ module MealFinder
         select_recipe(recipe_arr)
 
       elsif input.downcase == "list courses"
-        #MealFinder::Recipes.all.clear
         list_courses 
  
       elsif input.downcase == "exit"

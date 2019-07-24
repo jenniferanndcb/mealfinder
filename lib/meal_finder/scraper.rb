@@ -44,8 +44,7 @@ module MealFinder
 
     def self.scrape_recipe_details(selected_recipe)
       puts "************ scraping ***************"
-      ingredients_list = []
-      method_list = []
+     
 
       doc = Nokogiri::HTML(open(selected_recipe.url))
 
@@ -54,37 +53,27 @@ module MealFinder
       selected_recipe.prep_time = doc.css(".recipe-details .recipe-details__text .recipe-details__cooking-time-prep").text
       selected_recipe.cook_time = doc.css(".recipe-details .recipe-details__text .recipe-details__cooking-time-cook").text
       
+  
 
       doc.css(".recipe-content").each do |recipe|
         recipe.css(".ingredients-list li").each do |ingredient|
           ingredients = ingredient.attr("content")
           
-          ingredients_list << ingredients
-         
+          selected_recipe.ingredients_list << ingredients
+           
+                
         end 
+
         recipe.css(".method__list li").each do |method|
           method_actions = method.css("p").text 
 
-          method_list << method_actions
+          selected_recipe.method_list << method_actions
 
         end
         
-        puts "Ingredients:\n\t"
-        puts ingredients_list.collect {|item| "#{item}"}
-        puts "\nMethod:\n\t"
-        puts method_list.map.with_index {|method, index| "#{index+1}. #{method}\n\t"}
-      
-     
-      selected_recipe.details  = self 
       
       end   
       
-      
-      
-      
-
-      
-
     end 
 
   end 
