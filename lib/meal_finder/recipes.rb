@@ -26,11 +26,12 @@ module MealFinder
     end 
 
     def self.find_recipe_list (selected_course)
-      self.all.detect{|recipes| recipes.name }
+      self.all.detect {|recipe| recipe.name }
     end 
 
     def self.find_or_create_recipe_list (selected_course)
       self.find_recipe_list(selected_course) || self.create_recipe_list(selected_course)
+      binding.pry
     end 
 
     
