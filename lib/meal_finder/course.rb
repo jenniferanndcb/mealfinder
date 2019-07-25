@@ -14,10 +14,7 @@ module MealFinder
         @url = url  
         @recipes = []
       end 
-     
-      def self.list_course_names
-        MealFinder::Scraper.scrape_courses
-      end 
+      
   
       def self.all 
        @@all
@@ -31,10 +28,6 @@ module MealFinder
         @recipes 
       end 
 
-      def add_recipe(recipe)
-        self.recipes << recipe unless self.recipes.include?(recipe)
-        recipe.course = self 
-      end 
     end 
 
 end 

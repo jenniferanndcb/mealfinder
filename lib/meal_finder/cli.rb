@@ -26,7 +26,7 @@ module MealFinder
       input = gets.chomp 
 
       if input.downcase == "list courses"
-        MealFinder::Course.list_course_names
+        MealFinder::Scraper.scrape_courses if MealFinder::Course.all.size == 0 
         list_courses
       elsif input.downcase == "exit"
         goodbye 
@@ -68,7 +68,7 @@ module MealFinder
           puts "\t Great! Here are some ideas for you to make for #{selected_course.name}. Please type in the number of the dish you would like to 
           \t find out more about or simply type in 'list courses' to go back to the main menu and choose a different course\t" 
       
-          MealFinder::Scraper.scrape_recipes(selected_course)  
+          MealFinder::Scraper.scrape_recipes(selected_course) if MealFinder::Recipes.all.size == 0  
           list_recipes
 
       else 
@@ -97,13 +97,13 @@ module MealFinder
 
     def select_recipe
     
-    input = gets.chomp 
+    input = gets.chomp.downcase 
 
       
-    if input.downcase == "list courses"
+    if input == "list courses"
       list_courses
 
-      elsif input.downcase == "exit"
+      elsif input == "exit"
         goodbye
       
       elsif input.to_i > 0 && input.to_i <= MealFinder::Recipes.all.size
@@ -121,27 +121,30 @@ module MealFinder
     end 
     
     def recipe_details(selected_recipe)
-      MealFinder::Scraper.scrape_recipe_details(selected_recipe)
+      MealFinder::Scraper.scrape_recipe_details(selected_recipe) unless selected_recipe.details 
+       
+      recipe_details_content(selected_recipe) 
       
-      selected_recipe.details = recipe_details_content(selected_recipe) 
-      selected_recipe.details
       recipe_next_steps
        
       
     end 
     
     def recipe_details_content(selected_recipe)
+#binding.pry
+      deets = selected_recipe.details 
+
       puts "\t"
       puts "Here is the recipe for #{selected_recipe.name}\n\t" 
       
-      puts "#{selected_recipe.description}\n\t"
-      puts "#{selected_recipe.prep_time}"
-      puts "#{selected_recipe.cook_time}\n\t"
+      puts "#{deets[:description]}\n\t"
+      puts "#{deets[:prep_time]}"
+      puts "#{deets[:cook_time]}\n\t"
     
       puts "Ingredients:\n\t"
-      puts selected_recipe.ingredients_list.collect {|item| "#{item}"}
+      puts deets[:ingredients_list].collect {|item| "#{item}"}
       puts "\nMethod:\n\t"
-      puts selected_recipe.method_list.map.with_index {|method, index| "#{index+1}. #{method}\n\t"}
+      puts deets[:method_list].each.with_index {|method, index| "#{index+1}. #{method}\n\t"}
 
     end
 
