@@ -68,7 +68,7 @@ module MealFinder
           puts "\t Great! Here are some ideas for you to make for #{selected_course.name}. Please type in the number of the dish you would like to 
           \t find out more about or simply type in 'list courses' to go back to the main menu and choose a different course\t" 
       
-          MealFinder::Scraper.scrape_recipes(selected_course)
+          MealFinder::Scraper.scrape_recipes(selected_course)  
           list_recipes
 
       else 
@@ -87,6 +87,8 @@ module MealFinder
   
       puts MealFinder::Recipes.all.map.with_index {|recipe, i| 
         "#{i+1}. #{recipe.name}"}
+      
+      
 
       select_recipe
 
@@ -157,12 +159,11 @@ module MealFinder
       input = gets.chomp 
 
       if input.downcase == "list recipes"
-        recipe_arr = MealFinder::Recipes.all
   
-        puts recipe_arr.map.with_index {|recipe, i| 
+        puts MealFinder::Recipes.all.map.with_index {|recipe, i| 
           "#{i+1}. #{recipe.name}"}
         
-        select_recipe(recipe_arr)
+        select_recipe
 
       elsif input.downcase == "list courses"
         list_courses 

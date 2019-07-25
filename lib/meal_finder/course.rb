@@ -12,6 +12,7 @@ module MealFinder
       def initialize (name = nil, url = nil)
         @name = name 
         @url = url  
+        @recipes = []
       end 
      
       def self.list_course_names
@@ -26,6 +27,14 @@ module MealFinder
         @@all << self 
       end 
   
+      def recipes 
+        @recipes 
+      end 
+
+      def add_recipe(recipe)
+        self.recipes << recipe unless self.recipes.include?(recipe)
+        recipe.course = self 
+      end 
     end 
 
 end 

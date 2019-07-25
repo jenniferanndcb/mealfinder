@@ -34,6 +34,7 @@ module MealFinder
         new_recipe = Recipes.new
         new_recipe.name = recipes.css("a").text.strip
         new_recipe.url = BASE_URL + recipes.css("a")[0]["href"]
+        new_recipe.course = selected_course.name 
         
 
         Recipes.all << new_recipe

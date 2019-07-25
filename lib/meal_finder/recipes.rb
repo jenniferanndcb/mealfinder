@@ -5,7 +5,7 @@ module MealFinder
 
     include Memorable::InstanceMethods 
 
-    attr_accessor :name, :url, :details, :cook_time, :prep_time, :description, :ingredients_list, :method_list
+    attr_accessor :name, :url, :course, :details, :cook_time, :prep_time, :description, :ingredients_list, :method_list
 
     @@recipe_collection = []
 
@@ -13,6 +13,7 @@ module MealFinder
     def initialize (name = nil, url = nil) 
       @name = name 
       @url = url 
+      @course = course
       @details = details
       @cook_time = cook_time
       @prep_time = prep_time
@@ -21,32 +22,12 @@ module MealFinder
 
     end 
 
-    def self.create_recipe_list (selected_course)
-      MealFinder::Scraper.scrape_recipes(selected_course)
-    end 
-
-    def self.find_recipe_list (selected_course)
-      self.all.detect {|recipe| recipe.name }
-    end 
-
-    def self.find_or_create_recipe_list (selected_course)
-      self.find_recipe_list(selected_course) || self.create_recipe_list(selected_course)
-      binding.pry
-    end 
-
     
-
-#    def self.create_recipe(selected_recipe)
-#      MealFinder::Scraper.scrape_recipe_details(selected_recipe) 
-#    end 
-
-#    def self.find_recipe(selected_recipe)
-#      self.all.detect {|recipes|recipes.url}
-#    end 
-
-#    def self.find_or_create_recipe(selected_recipe)
-#      self.find_recipe(selected_recipe) || self.create_recipe(selected_recipe)
-#    end 
+    def course=(course)
+     @course = course
+     binding.pry
+      course.add_recipe(self)
+    end 
 
     def save
       @@recipe_collection << self
